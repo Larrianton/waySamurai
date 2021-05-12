@@ -5,6 +5,7 @@ export type PostType = {
     message: string ;
     img: string ;
     likes: number ;
+    id:string
 }
 
 export const Post = (props: PostType) => {

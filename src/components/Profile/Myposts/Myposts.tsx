@@ -1,9 +1,17 @@
 import React from 'react';
 import s from './Myposts.module.css'
 import {Post} from "./Post/Post";
+import {postsDataType} from "../../../App";
 
 
-export const Myposts = () => {
+
+export type MyPostsType = {
+    postsData : Array<postsDataType>
+
+}
+export const Myposts = (props:MyPostsType) => {
+    let postElements = props.postsData.map((p) => (<Post id={p.id} likes={p.likes} message={p.message} img={p.img} />))
+
     return (
         <div className={s.posts}>
             My posts
@@ -12,8 +20,7 @@ export const Myposts = () => {
                 <button>Add Post</button>
                 <button>Text Remove</button>
             </div>
-            <Post likes={15} message='Hi ,im learning Js' img="https://aw.mail.ru/ms/02dc975224518acc56b7e1e9e73d40ec.png" />
-            <Post likes={15} message='How are you?' img="https://aw.mail.ru/ms/02dc975224518acc56b7e1e9e73d40ec.png" />
+            {postElements}
         </div>
     );
 }

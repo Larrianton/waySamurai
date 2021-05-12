@@ -1,10 +1,15 @@
 import React from 'react';
 import s from './Profile.module.css'
 import {Myposts} from "./Myposts/Myposts";
-import {Post} from "./Myposts/Post/Post";
+import {postsDataType} from "../../App";
+
+type profileType ={
+    postsData : Array<postsDataType>
+}
+export const Profile = (props:profileType) => {
 
 
-export const Profile = () => {
+
     return (
 
         <div className={s.content}>
@@ -16,7 +21,7 @@ export const Profile = () => {
             <div>
                 ava + description
             </div>
-            <Myposts/>
+            <Myposts postsData={props.postsData}/>
         </div>
 
     );
