@@ -3,39 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {v1} from "uuid";
+import state from "./redux/State";
 
-let postsData  = [
-    {
-        id: v1(),
-        likes: 15,
-        img: "https://aw.mail.ru/ms/02dc975224518acc56b7e1e9e73d40ec.png",
-        message: 'Hi ,im learning Js'
-    },
-    {
-        id: v1(),
-        likes: 12,
-        img: "https://aw.mail.ru/ms/02dc975224518acc56b7e1e9e73d40ec.png",
-        message: 'How are you?'
-    },
-]
-let dialogsData = [
-    {id: v1(), name: "Katya"},
-    {id: v1(), name: "Sveta"},
-    {id: v1(), name: "Valery"},
-    {id: v1(), name: "Alexander"},
-    {id: v1(), name: "Dmitriy"}
-]
-let messagesData = [
-    {id: v1(), message: "Hello what is your name ?"},
-    {id: v1(), message: "how are you"},
-    {id: v1(), message: "Relax take it easy!"},
-    {id: v1(), message: "yo Man!"},
-    {id: v1(), message: "Hey chicks!"}
-]
+
 ReactDOM.render(
   <React.StrictMode>
-    <App postsData={postsData} dialogsData={dialogsData} messagesData={messagesData}/>
+    <App dialogsPage={state.dialogsPage}  profilePage={state.profilePage} sideBar={state.sideBar}/>
   </React.StrictMode>,
   document.getElementById('root')
 );

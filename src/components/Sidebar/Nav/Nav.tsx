@@ -1,9 +1,10 @@
 import React from 'react';
 import s from './Nav.module.css'
 import {NavLink} from "react-router-dom";
+import {navDataType} from "../../../redux/State";
 
 
-export const Nav:React.FC= (props) => {
+export const Nav:React.FC= (props:navDataType) => {
     return (
         <div className={s.nav}>
             <div className={s.nav_wrapper}>
