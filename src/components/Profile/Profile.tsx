@@ -2,9 +2,11 @@ import React from 'react';
 import s from './Profile.module.css'
 import {Myposts} from "./Myposts/Myposts";
 import {profilePageType} from "../../redux/State";
+type profileType ={
+    profilePage:profilePageType
+}
 
-
-export const Profile = (props:profilePageType) => {
+export const Profile = (props:profileType) => {
 
 
 
@@ -19,7 +21,7 @@ export const Profile = (props:profilePageType) => {
             <div>
                 ava + description
             </div>
-            <Myposts postsData={props.postsData}/>
+            <Myposts postsData={props.profilePage.postsData}/>
         </div>
 
     );
