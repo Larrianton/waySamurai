@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {rerenderEntireTree} from "../render";
 
 
 export type postType = {
@@ -9,6 +10,7 @@ export type postType = {
 }
 export type profilePageType = {
     postsData:Array<postType>
+
 }
 export type dialogsDataType = {
     id: string
@@ -28,10 +30,7 @@ export type rootStateType = {
     profilePage:profilePageType
     sideBar:sideBarType
 }
-export type navDataType = {
-    id:string
-    name:string
-}
+
 export type friendsDataType = {
     id: string
     name: string
@@ -71,6 +70,17 @@ let state:rootStateType = {
 ]
 
 }
+}
+export const addPost = (postMessage:string ) => {
+    debugger;
+    let newPost = {
+        id:v1() ,
+        message: postMessage.trim() ,
+        likes:0 ,
+        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKTYsXfFpkymGFmBsk9MetiDLSxyETN_phfg&usqp=CAU"
+    }
+    state.profilePage.postsData.push(newPost)
+    rerenderEntireTree(state)
 }
 
 export default state

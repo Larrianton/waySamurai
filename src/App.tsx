@@ -3,33 +3,35 @@ import {Header} from "./components/Header/Header";
 import './App.css';
 import {Profile} from "./components/Profile/Profile";
 import {Dialogs} from "./components/Dialogs/Dialogs";
-import {BrowserRouter, Route} from "react-router-dom";
+import {Route} from "react-router-dom";
 import {rootStateType} from "./redux/State"
 import {Nav} from "./components/navigation/Nav/Nav";
 
 export type AppPropsType = {
-    state:rootStateType
+    state: rootStateType
+    addPost: (postMessage: string) => void
 }
 
 
-function App(props:AppPropsType) {
+function App(props: AppPropsType) {
 
     return (
-        <BrowserRouter>
-            <div className="app_wrapper">
-                <Header/>
-                <Nav sideBar={props.state.sideBar}/>
-                <div className="s.content">
+
+        <div className="app_wrapper">
+            <Header/>
+            <Nav sideBar={props.state.sideBar}/>
+            <div className="s.content">
 
 
-                    <Route exact path={"/profile"} render={() => <Profile profilePage={props.state.profilePage}/>}/>
-                    <Route exact path={"/dialogs"} render={() => <Dialogs dialogsPage={props.state.dialogsPage} />}/>
-                    <Route path={"/news"}/>
-                    <Route path={"/music"}/>
-                    <Route path={"/settings"}/>
-                </div>
+                <Route exact path={"/profile"}
+                       render={() => <Profile profilePage={props.state.profilePage} addPost={props.addPost}/>}/>
+                <Route exact path={"/dialogs"} render={() => <Dialogs dialogsPage={props.state.dialogsPage}/>}/>
+                <Route path={"/news"}/>
+                <Route path={"/music"}/>
+                <Route path={"/settings"}/>
             </div>
-        </BrowserRouter>
+        </div>
+
     );
 }
 

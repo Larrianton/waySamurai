@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {RefObject} from 'react';
 import s from './Profile.module.css'
 import {Myposts} from "./Myposts/Myposts";
 import {profilePageType} from "../../redux/State";
 type profileType ={
     profilePage:profilePageType
+    addPost: (postMessage:string) => void
 }
 
 export const Profile = (props:profileType) => {
+
 
 
 
@@ -21,7 +23,9 @@ export const Profile = (props:profileType) => {
             <div>
                 ava + description
             </div>
-            <Myposts postsData={props.profilePage.postsData}/>
+
+            <Myposts postsData={props.profilePage.postsData}
+            addPost={props.addPost}/>
         </div>
 
     );
