@@ -10,6 +10,7 @@ export type postType = {
 }
 export type profilePageType = {
     postsData:Array<postType>
+    newPostText:string
 
 }
 export type dialogsDataType = {
@@ -29,6 +30,7 @@ export type rootStateType = {
     dialogsPage:dialogsPageType
     profilePage:profilePageType
     sideBar:sideBarType
+
 }
 
 export type friendsDataType = {
@@ -57,6 +59,7 @@ let state:rootStateType = {
         ]
     },
     profilePage: {
+        newPostText:"" ,
         postsData:[
             {id: v1(),likes: 15,img: "https://aw.mail.ru/ms/02dc975224518acc56b7e1e9e73d40ec.png",message: 'Hi ,im learning Js'},
             {id: v1(),likes: 12,img: "https://aw.mail.ru/ms/02dc975224518acc56b7e1e9e73d40ec.png",message: 'How are you?'}
@@ -72,8 +75,7 @@ let state:rootStateType = {
 }
 }
 export const addPost = (postMessage:string ) => {
-    debugger;
-    let newPost = {
+       let newPost = {
         id:v1() ,
         message: postMessage.trim() ,
         likes:0 ,
@@ -82,5 +84,10 @@ export const addPost = (postMessage:string ) => {
     state.profilePage.postsData.push(newPost)
     rerenderEntireTree(state)
 }
+export const changePostText = (newText:string) => {
+   state.profilePage.newPostText = newText
+    rerenderEntireTree(state)
+    }
+
 
 export default state

@@ -4,12 +4,14 @@ import './App.css';
 import {Profile} from "./components/Profile/Profile";
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {Route} from "react-router-dom";
-import {rootStateType} from "./redux/State"
+import {changePostText, rootStateType} from "./redux/State"
 import {Nav} from "./components/navigation/Nav/Nav";
 
 export type AppPropsType = {
     state: rootStateType
     addPost: (postMessage: string) => void
+    changePostText: (newText:string) => void
+
 }
 
 
@@ -24,7 +26,7 @@ function App(props: AppPropsType) {
 
 
                 <Route exact path={"/profile"}
-                       render={() => <Profile profilePage={props.state.profilePage} addPost={props.addPost}/>}/>
+                       render={() => <Profile profilePage={props.state.profilePage} addPost={props.addPost} changePostText={changePostText} />}/>
                 <Route exact path={"/dialogs"} render={() => <Dialogs dialogsPage={props.state.dialogsPage}/>}/>
                 <Route path={"/news"}/>
                 <Route path={"/music"}/>
