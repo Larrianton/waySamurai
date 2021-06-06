@@ -20,7 +20,7 @@ export const Myposts = (props: myPostsPropsType) => {
     const changePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
 
         props.dispatch(changePostTextActionCreator(e.currentTarget.value))
-        console.log (props.newPostText)
+
 
     }
     return (

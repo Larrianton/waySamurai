@@ -25,7 +25,7 @@ function App(props: AppPropsType) {
 
                 <Route exact path={"/profile"}
                        render={() => <Profile profilePage={props.state.profilePage} dispatch={props.dispatch} />}/>
-                <Route exact path={"/dialogs"} render={() => <Dialogs dialogsPage={props.state.dialogsPage}/>}/>
+                <Route exact path={"/dialogs"} render={() => <Dialogs dialogsPage={props.state.dialogsPage} dispatch={props.dispatch}/>}/>
                 <Route path={"/news"}/>
                 <Route path={"/music"}/>
                 <Route path={"/settings"}/>

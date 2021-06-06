@@ -22,6 +22,7 @@ export type messagesDataType = {
 export type dialogsPageType = {
     dialogsData: Array<dialogsDataType>
     messagesData: Array<messagesDataType>
+    newMessageText:string
 }
 export type rootStateType = {
     dialogsPage: dialogsPageType
@@ -38,7 +39,6 @@ export type sideBarType = {
     friendsData: Array<friendsDataType>
 
 }
-
 export type storeType = {
     _state: rootStateType
     subscribe: (callback: () => void) => void
@@ -46,7 +46,6 @@ export type storeType = {
     getState: () => rootStateType
     dispatch: (action: ActionTypes) => void
 }
-
 export type changePostTextActionType = {
     type: "CHANGE-POST-TEXT"
     newText: string
@@ -54,10 +53,18 @@ export type changePostTextActionType = {
 export type addPostActionType = {
     type: "ADD-POST"
 }
-export type ActionTypes = changePostTextActionType | addPostActionType
+export type ActionTypes = changePostTextActionType | addPostActionType |newMessageBodyActionType | sendMessageBodyActionType
+export type newMessageBodyActionType = {
+    type:"NEW-MESSAGE-BODY"
+    body:string
+}
+export type sendMessageBodyActionType = {
+    type:"SEND-MESSAGE"
+}
 const store: storeType = {
     _state: {
         dialogsPage: {
+            newMessageText:"" ,
             dialogsData: [
                 {
                     id: v1(),
@@ -151,16 +158,29 @@ const store: storeType = {
             this._state.profilePage.postsData.push(newPost)
             this._rerenderEntireTree()
 
-        } else if (action.type = "CHANGE-POST-TEXT") {
+        } else if (action.type === "CHANGE-POST-TEXT") {
             this._state.profilePage.newPostText = action.newText
             this._rerenderEntireTree()
 
+        } else if (action.type === "NEW-MESSAGE-BODY") {
+            this._state.dialogsPage.newMessageText = action.body
+            this._rerenderEntireTree()
+        } else if (action.type === "SEND-MESSAGE") {
+            let newMessage = {
+                id: v1(),
+                message: this._state.dialogsPage.newMessageText
+            }
+            this._state.dialogsPage.messagesData.push(newMessage)
+            this._rerenderEntireTree()
         }
+
     }
 
 }
 export const addNewPostActionCreator = (): addPostActionType  => ({type:"ADD-POST"})
 export const changePostTextActionCreator = (newText: string):changePostTextActionType => ({type: 'CHANGE-POST-TEXT',newText})
+export const newMessageBodyActionCreator = (body:string):newMessageBodyActionType => ({type:"NEW-MESSAGE-BODY" , body})
+export const sendMessageActionCreator = (): sendMessageBodyActionType => ({type:"SEND-MESSAGE"})
 
 export default store;
 
