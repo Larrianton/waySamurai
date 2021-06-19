@@ -2,13 +2,15 @@ import React from 'react';
 import s from './Post.module.css'
 
 export type PostType = {
-    message: string ;
-    img: string ;
-    likes: number ;
+   img:string
     id:string
+    likes:number
+    message:string
 }
 
 export const Post = (props: PostType) => {
+
+
     return (
         <div className={s.content}>
 

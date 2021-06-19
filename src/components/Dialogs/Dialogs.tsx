@@ -1,23 +1,23 @@
-import React, {ChangeEvent, MouseEventHandler} from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from "./Dialog/DialogItem";
 import {MessageItem} from "./MessageItem/MessageItem";
 import {newMessageBodyActionCreator, sendMessageActionCreator} from "../../redux/dialogs-reducer";
-import {ActionTypes, dialogsPageType} from "../../redux/State";
+import {ActionTypes, rootStateType} from "../../redux/store";
 
 type dialogsType = {
-    dialogsPage: dialogsPageType
+    state: rootStateType
     dispatch: (action: ActionTypes) => void
 }
 
 export const Dialogs = (props: dialogsType) => {
 
 
-    let dialogElements = props.dialogsPage.dialogsData.map(d => <DialogItem name={d.name} id={d.id} image={d.image}/>);
-    let messageElements = props.dialogsPage.messagesData.map(m => <MessageItem message={m.message}/>)
+    let dialogElements = props.state.dialogsPage.dialogsData.map(d => <DialogItem name={d.name} id={d.id} image={d.image}/>);
+    let messageElements = props.state.dialogsPage.messagesData.map(m => <MessageItem message={m.message}/>)
 
     const sendMessage = () => {
-       props.dispatch(sendMessageActionCreator())
+        props.dispatch(sendMessageActionCreator())
 
     }
     const changeMessageBody = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -35,7 +35,7 @@ export const Dialogs = (props: dialogsType) => {
 
             </div>
             <div>
-                <textarea value={props.dialogsPage.newMessageText} onChange={changeMessageBody}></textarea>
+                <textarea value={props.state.dialogsPage.newMessageText} onChange={changeMessageBody}></textarea>
                 <button onClick={sendMessage}>Send Message</button>
             </div>
         </div>

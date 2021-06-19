@@ -1,11 +1,11 @@
 import React from 'react';
 import s from './Nav.module.css'
 import {NavLink} from "react-router-dom";
-import {sideBarType} from "../../../redux/State";
+import {rootStateType} from "../../../redux/store";
 import {Friends} from "../Friends/Friends";
 
 type navPropsType = {
-    sideBar:sideBarType
+    state: rootStateType
 }
 
 export const Nav = (props: navPropsType) => {
@@ -32,7 +32,7 @@ export const Nav = (props: navPropsType) => {
 
                 </ul>
             </div>
-           <Friends friendsData={props.sideBar.friendsData}></Friends>
+            <Friends state={props.state}></Friends>
 
         </div>
     );

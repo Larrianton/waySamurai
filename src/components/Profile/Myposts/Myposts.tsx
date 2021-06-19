@@ -1,39 +1,33 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, MouseEvent} from 'react';
 import s from './Myposts.module.css'
-import {Post} from "./Post/Post";
-import {addNewPostActionCreator, changePostTextActionCreator} from "../../../redux/profile-reducer"
-import {ActionTypes, postType} from "../../../redux/State";
+import {rootStateType} from "../../../redux/store";
+import {Post, PostType} from "./Post/Post";
 
 type myPostsPropsType = {
-    dispatch: (action: ActionTypes) => void
-    postsData: Array<postType>
-    newPostText: string
+    changePostText: (text: string) => void
+    addNewPostText: () => void
+    postsData: Array<PostType>
+    state: rootStateType
+
 }
 
 
 export const Myposts = (props: myPostsPropsType) => {
-    let postElements = props.postsData.map((p) => (<Post id={p.id} likes={p.likes} message={p.message} img={p.img}/>))
-
-
-    const addNewPost = () => {
-        props.dispatch(addNewPostActionCreator())
+    const PostElements = props.postsData.map((p)=>  <Post img={p.img} message={p.message} likes={p.likes} id={p.id}/>)
+    const onChangePost = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.changePostText(e.currentTarget.value)
     }
-    const changePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-
-        props.dispatch(changePostTextActionCreator(e.currentTarget.value))
-
-
-    }
+    const addPost = (e:MouseEvent<HTMLButtonElement>) => {props.addNewPostText()}
     return (
         <div className={s.posts}>
             My posts
             <div className={s.item}>
-                <textarea onChange={changePostText}
-                          value={props.newPostText}/>
-                <button onClick={addNewPost}>Add Post</button>
+                <textarea onChange={onChangePost}
+                          value={props.state.profilePage.newPostText}/>
+                <button onClick={addPost}>Add Post</button>
                 <button>Text Remove</button>
             </div>
-            {postElements}
+            {PostElements}
         </div>
     );
 
