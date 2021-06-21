@@ -2,13 +2,13 @@ import React from 'react';
 import {Header} from "./components/Header/Header";
 import './App.css';
 import {Profile} from "./components/Profile/Profile";
-import {Dialogs} from "./components/Dialogs/Dialogs";
 import {Route} from "react-router-dom";
-import {ActionTypes, rootStateType} from "./redux/store"
 import {Nav} from "./components/navigation/Nav/Nav";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {rootStateType} from "./redux/store";
+
 export type AppPropsType = {
-    state:rootStateType
-    dispatch: (action: ActionTypes) => void
+    state: rootStateType
 }
 
 
@@ -18,13 +18,14 @@ function App(props: AppPropsType) {
 
         <div className="app_wrapper">
             <Header/>
-            <Nav state={props.state}/>
+            <Nav />
             <div className="s.content">
 
 
                 <Route exact path={"/profile"}
-                       render={() => <Profile state={props.state} dispatch={props.dispatch} />}/>
-                <Route exact path={"/dialogs"} render={() => <Dialogs state={props.state} dispatch={props.dispatch}/>}/>
+                       render={() => <Profile />}/>
+                <Route exact path={"/dialogs"}
+                       render={() => <DialogsContainer />}/>
                 <Route path={"/news"}/>
                 <Route path={"/music"}/>
                 <Route path={"/settings"}/>

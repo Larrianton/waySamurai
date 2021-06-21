@@ -41,7 +41,7 @@ export type sideBarType = {
     friendsData: Array<friendsDataType>
 
 }
-export type storeType = {
+ type storeType = {
     _state: rootStateType
     subscribe: (callback: () => void) => void
     _rerenderEntireTree: () => void

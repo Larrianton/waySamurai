@@ -1,14 +1,11 @@
 import React from 'react';
 import s from './Nav.module.css'
 import {NavLink} from "react-router-dom";
-import {rootStateType} from "../../../redux/store";
 import {Friends} from "../Friends/Friends";
+import StoreContext from "../../../StoreContext";
 
-type navPropsType = {
-    state: rootStateType
-}
 
-export const Nav = (props: navPropsType) => {
+export const Nav = () => {
 
     return (
         <div className={s.nav}>
@@ -32,8 +29,15 @@ export const Nav = (props: navPropsType) => {
 
                 </ul>
             </div>
-            <Friends state={props.state}></Friends>
+            <StoreContext.Consumer>
+                {
+                    store => {
+                        let state = store.getState()
+                        return <Friends state ={state} />
+                    }
+                }
 
+            </StoreContext.Consumer>
         </div>
     );
 }

@@ -1,15 +1,10 @@
 import React from 'react';
 import s from './Profile.module.css'
-import {Myposts} from "./Myposts/Myposts";
-import {ActionTypes, rootStateType} from "../../redux/store";
 import {MypostsContainer} from "./Myposts/MypostsContainer";
+import StoreContext from "../../StoreContext";
 
-type profileType = {
-    state: rootStateType
-    dispatch: (action: ActionTypes) => void
-}
 
-export const Profile = (props: profileType) => {
+export const Profile = () => {
 
 
     return (
@@ -23,9 +18,7 @@ export const Profile = (props: profileType) => {
             <div>
                 ava + description
             </div>
-
-            <MypostsContainer state={props.state}
-                     dispatch={props.dispatch}/>
+            <MypostsContainer />
         </div>
 
     );

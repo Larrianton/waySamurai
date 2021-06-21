@@ -7,7 +7,8 @@ type friendsType = {
 }
 
 export const Friends = (props: friendsType) => {
-    const friendElements = props.state.sideBar.friendsData.map((f) => {
+
+    const friendElements =props.state.sideBar.friendsData.map((f) => {
         return (
             <div className={s.friendsItem}>
                 <img src={f.image} className={s.friendsItemImg}/>
