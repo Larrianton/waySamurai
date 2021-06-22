@@ -2,7 +2,9 @@ import React from 'react';
 import s from './Nav.module.css'
 import {NavLink} from "react-router-dom";
 import {Friends} from "../Friends/Friends";
-import StoreContext from "../../../StoreContext";
+import {AppStateType} from "../../../redux/redux-store";
+import {connect} from "react-redux";
+import {friendsDataType} from "../../../redux/store";
 
 
 export const Nav = () => {
@@ -29,16 +31,20 @@ export const Nav = () => {
 
                 </ul>
             </div>
-            <StoreContext.Consumer>
-                {
-                    store => {
-                        let state = store.getState()
-                        return <Friends state ={state} />
-                    }
-                }
+            <FriendsContainer/>
 
-            </StoreContext.Consumer>
         </div>
     );
 }
-
+type mapStateToProps = {
+    friendsData: Array<friendsDataType>
+}
+const mapStateToProps = (state: AppStateType): mapStateToProps => {
+    return {
+        friendsData: state.sideBar.friendsData
+    }
+}
+const mapDispatchToProps = () => {
+    return {}
+}
+export const FriendsContainer = connect(mapStateToProps, mapDispatchToProps)(Friends);

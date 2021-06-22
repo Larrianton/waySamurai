@@ -1,7 +1,6 @@
 import React from 'react';
 import s from './Profile.module.css'
 import {MypostsContainer} from "./Myposts/MypostsContainer";
-import StoreContext from "../../StoreContext";
 
 
 export const Profile = () => {
@@ -18,7 +17,7 @@ export const Profile = () => {
             <div>
                 ava + description
             </div>
-            <MypostsContainer />
+            <MypostsContainer/>
         </div>
 
     );

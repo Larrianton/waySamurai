@@ -5,8 +5,7 @@ import App from './App';
 import store from "./redux/redux-store"
 import {BrowserRouter} from "react-router-dom";
 import {rootStateType} from "./redux/store";
-import  {Provider} from "./StoreContext";
-
+import {Provider} from "react-redux";
 
 
 let rerenderEntireTree = (state:rootStateType) => {
@@ -16,7 +15,6 @@ let rerenderEntireTree = (state:rootStateType) => {
             <App state={store.getState()}
                  />
             </Provider>
-
         </BrowserRouter>, document.getElementById('root')
     );
 };

@@ -10,8 +10,8 @@ const send_message = "SEND-MESSAGE"
 
 
 let initialState = {
-        newMessageText: "",
-        dialogsData: [
+    newMessageText: "",
+    dialogsData: [
         {
             id: v1(),
             name: "Katya",
@@ -38,7 +38,7 @@ let initialState = {
             image: "https://i.pinimg.com/originals/9c/77/46/9c7746225873e02d83b9315501b8dd2f.jpg"
         }
     ],
-        messagesData: [
+    messagesData: [
         {id: v1(), message: "Hello what is your name ?"},
         {id: v1(), message: "how are you"},
         {id: v1(), message: "Relax take it easy!"},
@@ -48,22 +48,24 @@ let initialState = {
 }
 
 
-const dialogsReducer = (state:dialogsPageType = initialState, action: ActionTypes)   => {
+const dialogsReducer = (state: dialogsPageType = initialState, action: ActionTypes): dialogsPageType => {
     switch (action.type) {
         case new_message_body :
-            state.newMessageText = action.body
-            return {...state}
+            return {
+                ...state,
+                newMessageText: action.body
+            }
+
         case send_message :
             let newMessage = {
                 id: v1(),
                 message: state.newMessageText
             };
-
-            state.messagesData.push(newMessage)
-            state.newMessageText=""
-            console.log (state.newMessageText)
-            return {...state}
-
+            return {
+                ...state,
+                newMessageText: "",
+                messagesData: [...state.messagesData, newMessage],
+            }
         default:
             return {...state}
     }

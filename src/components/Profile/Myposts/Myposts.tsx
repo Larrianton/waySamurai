@@ -1,13 +1,11 @@
 import React, {ChangeEvent, MouseEvent} from 'react';
 import s from './Myposts.module.css'
-import {rootStateType} from "../../../redux/store";
 import {Post, PostType} from "./Post/Post";
 
 type myPostsPropsType = {
     changePostText: (text: string) => void
     addNewPostText: () => void
     postsData: Array<PostType>
-    state: rootStateType
     newPostText: string
 
 }

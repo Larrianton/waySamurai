@@ -33,12 +33,19 @@ const profileReducer = (state: profilePageType = initialState, action: ActionTyp
                 likes: 0,
                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKTYsXfFpkymGFmBsk9MetiDLSxyETN_phfg&usqp=CAU"
             };
-            state.postsData.push(newPost)
-            state.newPostText = ""
-            return {...state}
+            return {
+                ...state,
+                newPostText: " ",
+                postsData: [...state.postsData, newPost]
+            }
+
+
         case change_post:
-            state.newPostText = action.newText
-            return {...state}
+            return  {
+                ...state,
+                newPostText: action.newText
+            }
+
         default :
             return {...state}
     }

@@ -1,14 +1,14 @@
 import React from 'react';
 import s from './Friends.module.css'
-import {rootStateType} from "../../../redux/store";
+import {friendsDataType} from "../../../redux/store";
 
 type friendsType = {
-    state: rootStateType
+    friendsData: Array<friendsDataType>
 }
 
 export const Friends = (props: friendsType) => {
 
-    const friendElements =props.state.sideBar.friendsData.map((f) => {
+    const friendElements = props.friendsData.map((f) => {
         return (
             <div className={s.friendsItem}>
                 <img src={f.image} className={s.friendsItemImg}/>
@@ -30,3 +30,4 @@ export const Friends = (props: friendsType) => {
         </div>
     )
 }
+

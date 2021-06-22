@@ -1,34 +1,36 @@
 import React from 'react';
 import {newMessageBodyActionCreator, sendMessageActionCreator} from "../../redux/dialogs-reducer";
 import {Dialogs} from "./Dialogs";
-import StoreContext from "../../StoreContext";
+import {connect} from "react-redux";
+import {dialogsPageType} from "../../redux/store";
+import {AppStateType} from "../../redux/redux-store";
 
 
-export const DialogsContainer = () => {
-
-
-    return (
-        <StoreContext.Consumer>
-            {
-                (store) => {
-                    let state = store.getState()
-                    const sendMessage = () => {
-                        store.dispatch(sendMessageActionCreator())
-                    }
-                    const changeMessageBody = (text: string) => {
-                        store.dispatch(newMessageBodyActionCreator(text))
-                    }
-                    const messageBody = state.dialogsPage.newMessageText
-                    return <Dialogs
-                        state={state}
-                        sendMessage={sendMessage}
-                        changeMessage={changeMessageBody}
-                        messageBody={messageBody}
-
-                    />
-                }
-            }</StoreContext.Consumer>
-
-    )
-
+type mapStateToProps = {
+    dialogsPage: dialogsPageType
+    messageBody: string
 }
+type mapDispatchToProps = {
+    sendMessage: () => void
+    changeMessage: (text: string) => void
+}
+
+const mapStateToProps = (state: AppStateType): mapStateToProps => {
+    return {
+        dialogsPage: state.dialogsPage,
+        messageBody: state.dialogsPage.newMessageText,
+
+    }
+}
+const mapDispatchToProps = (dispatch: any): mapDispatchToProps => {
+    return {
+        sendMessage: () => {
+            dispatch(sendMessageActionCreator())
+        },
+        changeMessage: (text: string) => {
+            dispatch(newMessageBodyActionCreator(text))
+
+        }
+    }
+}
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
