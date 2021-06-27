@@ -10,8 +10,10 @@ let rootReducer = combineReducers({
     dialogsPage: dialogsReducer,
     profilePage: profileReducer,
     sideBar: sidebarReducer ,
-    users:usersReducer
+    usersPage:usersReducer
 })
  let store = createStore(rootReducer)
+//@ts-ignore
+window.store = store
 
 export default store

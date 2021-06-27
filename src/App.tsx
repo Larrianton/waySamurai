@@ -5,11 +5,12 @@ import {Profile} from "./components/Profile/Profile";
 import {Route} from "react-router-dom";
 import {Nav} from "./components/navigation/Nav/Nav";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import {rootStateType} from "./redux/store";
-import {Users} from "./components/Users/Users";
+import {AppStateType} from "./redux/redux-store";
+import {Users} from "./components/Users/UsersC";
+
 
 export type AppPropsType = {
-    state: rootStateType
+    state: AppStateType
 }
 
 
