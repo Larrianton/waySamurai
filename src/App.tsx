@@ -6,7 +6,7 @@ import {Route} from "react-router-dom";
 import {Nav} from "./components/navigation/Nav/Nav";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {AppStateType} from "./redux/redux-store";
-import {Users} from "./components/Users/UsersC";
+import {UsersContainer} from "./components/Users/UsersContainer";
 
 
 export type AppPropsType = {
@@ -27,7 +27,7 @@ function App(props: AppPropsType) {
                 <Route exact path={"/dialogs"}
                        render={() => <DialogsContainer/>}/>
                 <Route exact path={"/users"}
-                       render={() => <Users/>}/>
+                       render={() => <UsersContainer/>}/>
                 <Route path={"/news"}/>
                 <Route path={"/music"}/>
                 <Route path={"/settings"}/>

@@ -13,7 +13,6 @@ let rootReducer = combineReducers({
     usersPage:usersReducer
 })
  let store = createStore(rootReducer)
-//@ts-ignore
-window.store = store
+
 
 export default store

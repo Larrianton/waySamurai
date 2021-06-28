@@ -1,9 +1,5 @@
-
-
 export type InitialStateType = {
-    users:Array<UserType>
-
-
+    users: Array<UserType>
 }
 
 export type UserType = {
@@ -28,8 +24,10 @@ type setUsersAT = {
 }
 type ActionTypes = followAT | unfollowAT | setUsersAT
 let initialState = {
-    users: []
-
+    users: [
+        {
+        id: 98921, name: "Fosfat", status: "Im be back", photos: {small: "", large: ""}, followed: false
+    }]
 
 }
 const FOLLOW = "FOLLOW"
@@ -52,7 +50,7 @@ const usersReducer = (state = initialState, action: ActionTypes): InitialStateTy
                 )
             }
         case SETUSERS :
-            return {...state, users: [...action.users]}
+            return {...state, users: [...state.users ,...action.users]}
 
         default :
             return state
