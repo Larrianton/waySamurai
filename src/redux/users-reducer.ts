@@ -1,5 +1,8 @@
 export type InitialStateType = {
     users: Array<UserType>
+    pagesSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 
 export type UserType = {
@@ -19,23 +22,34 @@ type unfollowAT = {
     userId: number
 }
 type setUsersAT = {
-    type: "SET-USERS"
+    type: "SET_USERS"
     users: Array<UserType>
 }
-type ActionTypes = followAT | unfollowAT | setUsersAT
-let initialState = {
-    users: [
-        {
-        id: 98921, name: "Fosfat", status: "Im be back", photos: {small: "", large: ""}, followed: false
-    }]
+type setCurrentPageAT = {
+    type: "SET_CURRENT_PAGE"
+    currentPage: number
+}
+type setTotalUsersAT = {
+    type: "SET_TOTAL_USERS_COUNT"
+    totalUsersCount: number
+}
 
+
+type ActionTypes = followAT | unfollowAT | setUsersAT | setCurrentPageAT | setTotalUsersAT
+let initialState = {
+    users: [],
+    pagesSize: 1000,
+    totalUsersCount: 0,
+    currentPage: 1,
 }
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
-const SETUSERS = "SET-USERS"
+const SET_USERS = "SET_USERS"
+const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
+const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
 
 
-const usersReducer = (state = initialState, action: ActionTypes): InitialStateType => {
+const usersReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case FOLLOW :
             return {
@@ -49,8 +63,12 @@ const usersReducer = (state = initialState, action: ActionTypes): InitialStateTy
                 users: state.users.map((u) => u.id === action.userId ? {...u, followed: false} : u
                 )
             }
-        case SETUSERS :
-            return {...state, users: [...state.users ,...action.users]}
+        case SET_USERS :
+            return {...state, users: action.users}
+        case SET_CURRENT_PAGE :
+            return {...state, currentPage: action.currentPage}
+        case SET_TOTAL_USERS_COUNT :
+            return {...state, totalUsersCount: action.totalUsersCount}
 
         default :
             return state
@@ -60,6 +78,8 @@ const usersReducer = (state = initialState, action: ActionTypes): InitialStateTy
 
 export const followActionCreator = (userId: number) => ({type: "FOLLOW", userId})
 export const unfollowActionCreator = (userId: number) => ({type: "UNFOLLOW", userId})
-export const setUsersActionCreator = (users: Array<UserType>) => ({type: "SET-USERS", users})
+export const setUsersActionCreator = (users: Array<UserType>) => ({type: "SET_USERS", users})
+export const setCurrentPageActionCreator = (currentPage: number) => ({type: "SET_CURRENT_PAGE", currentPage})
+export const setTotalUsersCountAC = (totalUsersCount: number) => ({type: "SET_TOTAL_USERS_COUNT", totalUsersCount})
 
 export default usersReducer
