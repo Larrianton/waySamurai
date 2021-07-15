@@ -55,11 +55,6 @@ export type changePostTextActionType = {
 export type addPostActionType = {
     type: "ADD-POST"
 }
-export type ActionTypes =
-    changePostTextActionType
-    | addPostActionType
-    | newMessageBodyActionType
-    | sendMessageBodyActionType
 export type newMessageBodyActionType = {
     type: "NEW-MESSAGE-BODY"
     body: string
@@ -67,6 +62,12 @@ export type newMessageBodyActionType = {
 export type sendMessageBodyActionType = {
     type: "SEND-MESSAGE"
 }
+export type ActionTypes =
+    changePostTextActionType
+    | addPostActionType
+    | newMessageBodyActionType
+    | sendMessageBodyActionType
+
 const store: storeType = {
     _state: {
         dialogsPage: {
