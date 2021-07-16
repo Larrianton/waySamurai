@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import dialogsReducer from "./dialogs-reducer";
-import profileReducer from "./profile-reducer";
+import profileReducer, {addPostActionType, changePostTextActionType} from "./profile-reducer";
 
 export type postType = {
     id: string
@@ -48,13 +48,7 @@ export type sideBarType = {
     getState: () => rootStateType
     dispatch: (action: ActionTypes) => void
 }
-export type changePostTextActionType = {
-    type: "CHANGE-POST-TEXT"
-    newText: string
-}
-export type addPostActionType = {
-    type: "ADD-POST"
-}
+
 export type newMessageBodyActionType = {
     type: "NEW-MESSAGE-BODY"
     body: string
@@ -67,6 +61,7 @@ export type ActionTypes =
     | addPostActionType
     | newMessageBodyActionType
     | sendMessageBodyActionType
+
 
 const store: storeType = {
     _state: {

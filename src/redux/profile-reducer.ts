@@ -1,10 +1,46 @@
 import {v1} from "uuid";
-import {ActionTypes, addPostActionType, changePostTextActionType, profilePageType} from "./store";
 
-const add_post = "ADD-POST"
-const change_post = "CHANGE-POST-TEXT"
-export const addNewPostActionCreator = (): addPostActionType => ({type: add_post})
-export const changePostTextActionCreator = (newText: string): changePostTextActionType => ({type: change_post, newText})
+const ADD_POST = "ADD-POST"
+const CHANGE_POST = "CHANGE-POST-TEXT"
+const SET_PROFILE = "SET-PROFILE"
+export const addNewPostActionCreator = (): addPostActionType => ({type: ADD_POST})
+export const changePostTextActionCreator = (newText: string): changePostTextActionType => ({type: CHANGE_POST, newText})
+export const setProfile = (profile: ProfileType): setProfileActionType => ({type: SET_PROFILE, profile})
+export type changePostTextActionType = {
+    type: "CHANGE-POST-TEXT"
+    newText: string
+}
+export type addPostActionType = {
+    type: "ADD-POST"
+}
+
+export type setProfileActionType = {
+    type: "SET-PROFILE"
+    profile: ProfileType | null
+}
+
+type ActionTypesProfileReducer =
+    changePostTextActionType
+    | addPostActionType
+    | setProfileActionType
+
+type postType = {
+    id: string
+    likes: number
+    img: string
+    message: string
+}
+type profilePageType = {
+    postsData: Array<postType>
+    newPostText: string
+    profile: ProfileType | null
+}
+export type ProfileType = {
+    userId: string
+    fullName: string
+    photo: { large: string, small: string }
+}
+
 let initialState = {
     newPostText: "",
     postsData: [
@@ -20,13 +56,14 @@ let initialState = {
             img: "https://aw.mail.ru/ms/02dc975224518acc56b7e1e9e73d40ec.png",
             message: 'How are you?'
         }
-    ]
+    ],
+    profile: null,
 }
 
 
-const profileReducer = (state: profilePageType = initialState, action: ActionTypes) => {
+const profileReducer = (state: profilePageType = initialState, action: ActionTypesProfileReducer) => {
     switch (action.type) {
-        case add_post:
+        case ADD_POST:
             let newPost = {
                 id: v1(),
                 message: state.newPostText.trim(),
@@ -40,11 +77,17 @@ const profileReducer = (state: profilePageType = initialState, action: ActionTyp
             }
 
 
-        case change_post:
-            return  {
+        case CHANGE_POST:
+            return {
                 ...state,
                 newPostText: action.newText
             }
+        case SET_PROFILE : {
+            return {
+                ...state,
+                profile: action.profile
+            }
+        }
 
         default :
             return {...state}

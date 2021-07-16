@@ -1,12 +1,12 @@
 import React from 'react';
 import {Header} from "./components/Header/Header";
 import './App.css';
-import {Profile} from "./components/Profile/Profile";
 import {Route} from "react-router-dom";
 import {Nav} from "./components/navigation/Nav/Nav";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {AppStateType} from "./redux/redux-store";
 import {UsersWithConnect} from "./components/Users/UsersContainer";
+import {ProfileWithConnect} from "./components/Profile/ProfileContainer";
 
 
 export type AppPropsType = {
@@ -23,7 +23,7 @@ function App(props: AppPropsType) {
             <Nav/>
             <div className="s.content">
                 <Route exact path={"/profile"}
-                       render={() => <Profile/>}/>
+                       render={() => <ProfileWithConnect />}/>
                 <Route exact path={"/dialogs"}
                        render={() => <DialogsContainer/>}/>
                 <Route exact path={"/users"}
