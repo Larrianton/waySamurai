@@ -21,7 +21,7 @@ export class ProfileContainer extends React.Component<ProfilePagePropsType> {
     render() {
         return (
             <div>
-                <Profile {...this.props}/>
+                <Profile {...this.props} userProfile={this.props.userProfile}/>
 
             </div>
 
@@ -29,17 +29,17 @@ export class ProfileContainer extends React.Component<ProfilePagePropsType> {
     }
 }
 
-type ProfilePagePropsType = mapStateToPropsType & mapDispatchToPropsType
+export type ProfilePagePropsType = mapStateToPropsType & mapDispatchToPropsType
 type mapDispatchToPropsType = {
     setProfile: (profile: ProfileType) => void
 }
-type mapStateToPropsType = {
-    profile: ProfileType | null
+export type mapStateToPropsType = {
+    userProfile: ProfileType | null
 }
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
-        profile: state.profilePage.profile
+        userProfile: state.profilePage.userProfile
     }
 
 }

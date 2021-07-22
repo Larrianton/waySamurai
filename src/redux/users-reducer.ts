@@ -55,7 +55,7 @@ const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
 const SET_IS_FETCHING = "SET_IS_FETCHING"
 
 
-const usersReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
+export const usersReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case FOLLOW :
             return {
@@ -91,4 +91,3 @@ export const setCurrentPage = (currentPage: number) => ({type: "SET_CURRENT_PAGE
 export const setTotalUsersCount = (totalUsersCount: number) => ({type: "SET_TOTAL_USERS_COUNT", totalUsersCount})
 export const setIsFetching = (isFetching:boolean) => ({type: "SET_IS_FETCHING", isFetching})
 
-export default usersReducer

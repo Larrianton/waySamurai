@@ -4,17 +4,11 @@ import './App.css';
 import {Route} from "react-router-dom";
 import {Nav} from "./components/navigation/Nav/Nav";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import {AppStateType} from "./redux/redux-store";
 import {UsersWithConnect} from "./components/Users/UsersContainer";
 import {ProfileWithConnect} from "./components/Profile/ProfileContainer";
 
 
-export type AppPropsType = {
-    state: AppStateType
-}
-
-
-function App(props: AppPropsType) {
+function App() {
 
     return (
 
@@ -23,11 +17,11 @@ function App(props: AppPropsType) {
             <Nav/>
             <div className="s.content">
                 <Route exact path={"/profile"}
-                       render={() => <ProfileWithConnect />}/>
+                       render={() => <ProfileWithConnect/>}/>
                 <Route exact path={"/dialogs"}
                        render={() => <DialogsContainer/>}/>
                 <Route exact path={"/users"}
-                       render={() => <UsersWithConnect />}/>
+                       render={() => <UsersWithConnect/>}/>
                 <Route path={"/news"}/>
                 <Route path={"/music"}/>
                 <Route path={"/settings"}/>

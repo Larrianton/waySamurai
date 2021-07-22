@@ -1,6 +1,8 @@
 import {v1} from "uuid";
-import dialogsReducer from "./dialogs-reducer";
-import profileReducer, {addPostActionType, changePostTextActionType} from "./profile-reducer";
+
+import {AddPostAC, ChangePostAC, profileReducer, ProfileType, SetProfileAC} from "./profile-reducer";
+import {dialogsReducer, newMessageBodyActionType, sendMessageBodyActionType} from "./dialogs-reducer";
+
 
 export type postType = {
     id: string
@@ -8,9 +10,11 @@ export type postType = {
     img: string
     message: string
 }
-export type profilePageType = {
+type profilePageType = {
     postsData: Array<postType>
     newPostText: string
+    userProfile: ProfileType | null
+
 }
 export type dialogsDataType = {
     id: string
@@ -41,7 +45,7 @@ export type sideBarType = {
     friendsData: Array<friendsDataType>
 
 }
- type storeType = {
+type storeType = {
     _state: rootStateType
     subscribe: (callback: () => void) => void
     _rerenderEntireTree: () => void
@@ -49,18 +53,12 @@ export type sideBarType = {
     dispatch: (action: ActionTypes) => void
 }
 
-export type newMessageBodyActionType = {
-    type: "NEW-MESSAGE-BODY"
-    body: string
-}
-export type sendMessageBodyActionType = {
-    type: "SEND-MESSAGE"
-}
-export type ActionTypes =
-    changePostTextActionType
-    | addPostActionType
-    | newMessageBodyActionType
+
+ type ActionTypes =  ChangePostAC
+    | AddPostAC
+    | SetProfileAC
     | sendMessageBodyActionType
+    | newMessageBodyActionType
 
 
 const store: storeType = {
@@ -103,6 +101,7 @@ const store: storeType = {
             ]
         },
         profilePage: {
+            userProfile:null ,
             newPostText: "",
             postsData: [
                 {
@@ -117,7 +116,8 @@ const store: storeType = {
                     img: "https://aw.mail.ru/ms/02dc975224518acc56b7e1e9e73d40ec.png",
                     message: 'How are you?'
                 }
-            ]
+            ],
+
         },
         sideBar: {
             friendsData: [
@@ -149,7 +149,7 @@ const store: storeType = {
     getState() {
         return this._state
     },
-    dispatch(action: ActionTypes) {
+    dispatch(action:any) {
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._rerenderEntireTree()

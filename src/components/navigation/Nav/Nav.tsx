@@ -20,7 +20,7 @@ export const Nav = () => {
                         <NavLink to={`/dialogs`} activeClassName={s.activeLink}>Messages</NavLink>
                     </li>
                     <li className={`${s.item} ${s.active}`}>
-                        <NavLink to={`/dialogs`} activeClassName={s.activeLink}>Users</NavLink>
+                        <NavLink to={`/users`} activeClassName={s.activeLink}>Users</NavLink>
                     </li>
                     <li className={`${s.item} ${s.active}`}>
                         <NavLink to={`/news`} activeClassName={s.activeLink}>News</NavLink>

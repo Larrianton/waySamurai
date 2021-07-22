@@ -1,39 +1,38 @@
 import {v1} from "uuid";
-
 const ADD_POST = "ADD-POST"
 const CHANGE_POST = "CHANGE-POST-TEXT"
 const SET_PROFILE = "SET-PROFILE"
-export const addNewPostActionCreator = (): addPostActionType => ({type: ADD_POST})
-export const changePostTextActionCreator = (newText: string): changePostTextActionType => ({type: CHANGE_POST, newText})
-export const setProfile = (profile: ProfileType): setProfileActionType => ({type: SET_PROFILE, profile})
-export type changePostTextActionType = {
+export const addNewPostActionCreator = (): AddPostAC => ({type: ADD_POST})
+export const changePostTextActionCreator = (newText: string): ChangePostAC => ({type: CHANGE_POST, newText})
+export const setProfile = (profile: ProfileType): SetProfileAC => ({type: SET_PROFILE, profile})
+export type ChangePostAC = {
     type: "CHANGE-POST-TEXT"
     newText: string
 }
-export type addPostActionType = {
+export type AddPostAC = {
     type: "ADD-POST"
 }
 
-export type setProfileActionType = {
+export type SetProfileAC = {
     type: "SET-PROFILE"
     profile: ProfileType | null
 }
 
-type ActionTypesProfileReducer =
-    changePostTextActionType
-    | addPostActionType
-    | setProfileActionType
+export type ActionTypesProfileReducer =
+    ChangePostAC
+    | AddPostAC
+    | SetProfileAC
 
-type postType = {
+type PostType = {
     id: string
     likes: number
     img: string
     message: string
 }
-type profilePageType = {
-    postsData: Array<postType>
+type ProfilePageType = {
+    postsData: Array<PostType>
     newPostText: string
-    profile: ProfileType | null
+    userProfile: ProfileType | null
 }
 export type ProfileType = {
     userId: string
@@ -41,7 +40,7 @@ export type ProfileType = {
     photo: { large: string, small: string }
 }
 
-let initialState = {
+let InitialState = {
     newPostText: "",
     postsData: [
         {
@@ -57,11 +56,11 @@ let initialState = {
             message: 'How are you?'
         }
     ],
-    profile: null,
+    userProfile: null,
 }
 
 
-const profileReducer = (state: profilePageType = initialState, action: ActionTypesProfileReducer) => {
+export const profileReducer = (state: ProfilePageType = InitialState, action: ActionTypesProfileReducer) => {
     switch (action.type) {
         case ADD_POST:
             let newPost = {
@@ -85,7 +84,7 @@ const profileReducer = (state: profilePageType = initialState, action: ActionTyp
         case SET_PROFILE : {
             return {
                 ...state,
-                profile: action.profile
+                userProfile: action.profile
             }
         }
 
@@ -94,4 +93,3 @@ const profileReducer = (state: profilePageType = initialState, action: ActionTyp
     }
 }
 
-export default profileReducer
