@@ -1,6 +1,5 @@
 import React from 'react';
 import s from './Profile.module.css'
-import {MypostsContainer} from "./Myposts/MypostsContainer";
 import {ProfileType} from "../../redux/profile-reducer";
 import {Preloader} from "../common/Preloader/Preloader";
 
@@ -8,7 +7,7 @@ type ProfileInfoPropsType = {
     userProfile: ProfileType | null
 }
 
-export const ProfileInfo = (props:ProfileInfoPropsType) => {
+export const ProfileInfo = (props: ProfileInfoPropsType) => {
 
     if (!props.userProfile) {
         return <Preloader/>
@@ -22,8 +21,8 @@ export const ProfileInfo = (props:ProfileInfoPropsType) => {
                      alt="background"/>
             </div>
             <div>
-               <img src={props.userProfile?.photo.small} />
-               <span>{props.userProfile?.fullName}</span>
+                <img src={props.userProfile.photos.small}/>
+                <span>{props.userProfile.fullName}</span>
             </div>
 
         </div>

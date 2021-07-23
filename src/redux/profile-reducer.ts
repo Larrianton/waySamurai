@@ -15,7 +15,7 @@ export type AddPostAC = {
 
 export type SetProfileAC = {
     type: "SET-PROFILE"
-    profile: ProfileType | null
+    profile: ProfileType
 }
 
 export type ActionTypesProfileReducer =
@@ -37,7 +37,7 @@ type ProfilePageType = {
 export type ProfileType = {
     userId: string
     fullName: string
-    photo: { large: string, small: string }
+    photos: { large: string, small: string }
 }
 
 let InitialState = {
@@ -56,7 +56,7 @@ let InitialState = {
             message: 'How are you?'
         }
     ],
-    userProfile: null,
+    userProfile: null ,
 }
 
 

@@ -10,12 +10,10 @@ import {ProfileType, setProfile} from "../../redux/profile-reducer";
 export class ProfileContainer extends React.Component<ProfilePagePropsType> {
     componentDidMount() {
 
-        axios.get<ProfileType>(`https://social-network.samuraijs.com/api/1.0/users/2`).then(res => {
-
+        axios.get<ProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/2`).then(res => {
+            debugger
             this.props.setProfile(res.data);
-
         })
-
     }
 
     render() {
@@ -39,7 +37,7 @@ export type mapStateToPropsType = {
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
-        userProfile: state.profilePage.userProfile
+        userProfile : state.profilePage.userProfile
     }
 
 }
