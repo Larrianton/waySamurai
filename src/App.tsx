@@ -16,7 +16,7 @@ function App() {
             <Header/>
             <Nav/>
             <div className="s.content">
-                <Route exact path={"/profile"}
+                <Route exact path={"/profile/:userId"}
                        render={() => <ProfileWithConnect/>}/>
                 <Route exact path={"/dialogs"}
                        render={() => <DialogsContainer/>}/>

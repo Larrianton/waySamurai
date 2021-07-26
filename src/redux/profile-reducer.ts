@@ -29,17 +29,17 @@ type PostType = {
     img: string
     message: string
 }
-type ProfilePageType = {
-    postsData: Array<PostType>
-    newPostText: string
-    userProfile: ProfileType | null
-}
+
 export type ProfileType = {
     userId: string
     fullName: string
     photos: { large: string, small: string }
 }
-
+type ProfilePageType = {
+    postsData: Array<PostType>
+    newPostText: string
+    userProfile: ProfileType | null
+}
 let InitialState = {
     newPostText: "",
     postsData: [
