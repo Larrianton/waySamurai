@@ -21,7 +21,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                      alt="background"/>
             </div>
             <div>
-                <img src={props.userProfile.photos.small ? "" : "https://avt-29.foto.mail.ru/mail/broonson/_avatar180?"}/>
+                <img src={props.userProfile.photos.small || "https://avt-29.foto.mail.ru/mail/broonson/_avatar180?"}/>
                 <span>{props.userProfile.fullName}</span>
             </div>
 

@@ -8,7 +8,7 @@ import {withRouter} from 'react-router-dom';
 import {RouteComponentProps} from "react-router"
 
 type PathParamProfile = {
-    userId: string
+    userId: string | undefined
 }
 type RouteProfile = RouteComponentProps<PathParamProfile>
 
@@ -23,6 +23,10 @@ export type ProfilePagePropsType = mapStateToPropsType & mapDispatchToPropsType 
 export class ProfileContainer extends React.Component<ProfilePagePropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
+        if (!userId) {
+            userId="2"
+        }
+        debugger
         axios.get<ProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(res => {
             debugger
             this.props.setProfile(res.data);
