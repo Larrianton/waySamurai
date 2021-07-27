@@ -25,7 +25,7 @@ type setIsFetchingAT = {
 
 
 type ActionTypes = followAT | unfollowAT | setUsersAT | setCurrentPageAT | setTotalUsersAT | setIsFetchingAT
-export type InitialStateType = {
+type InitialStateType = {
     users: Array<UserType>
     pagesSize: number
     totalUsersCount: number

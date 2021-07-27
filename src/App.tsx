@@ -6,6 +6,7 @@ import {Nav} from "./components/navigation/Nav/Nav";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersWithConnect} from "./components/Users/UsersContainer";
 import {ProfileWithConnect} from "./components/Profile/ProfileContainer";
+import {HeaderWithConnect} from "./components/Header/HeaderContainer";
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
     return (
 
         <div className="app_wrapper">
-            <Header/>
+            <HeaderWithConnect/>
             <Nav/>
             <div className="s.content">
                 <Route exact path={"/profile/:userId?"}
