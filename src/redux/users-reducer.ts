@@ -22,15 +22,34 @@ type setIsFetchingAT = {
     type: "SET_IS_FETCHING"
     isFetching: boolean
 }
+type setIsFollowingProgressAT = {
+    type: "SET_IS_FOLLOWING_PROGRESS"
+    followingInProgress: boolean
+}
 
 
-type ActionTypes = followAT | unfollowAT | setUsersAT | setCurrentPageAT | setTotalUsersAT | setIsFetchingAT
+type ActionTypes = followAT |
+    unfollowAT |
+    setUsersAT |
+    setCurrentPageAT |
+    setTotalUsersAT |
+    setIsFetchingAT |
+    setIsFollowingProgressAT
+const FOLLOW = "FOLLOW"
+const UNFOLLOW = "UNFOLLOW"
+const SET_USERS = "SET_USERS"
+const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
+const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
+const SET_IS_FETCHING = "SET_IS_FETCHING"
+const SET_IS_FOLLOWING_PROGRESS = "SET_IS_FOLLOWING_PROGRESS"
+
 type InitialStateType = {
     users: Array<UserType>
     pagesSize: number
     totalUsersCount: number
     currentPage: number
-    isFetching:boolean
+    isFetching: boolean
+    followingInProgress: boolean
 }
 export type UserType = {
     id: number
@@ -40,20 +59,16 @@ export type UserType = {
     followed: boolean
 
 }
+
+
 let initialState = {
     users: [],
     pagesSize: 10,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
+    followingInProgress: false,
 }
-const FOLLOW = "FOLLOW"
-const UNFOLLOW = "UNFOLLOW"
-const SET_USERS = "SET_USERS"
-const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
-const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
-const SET_IS_FETCHING = "SET_IS_FETCHING"
-
 
 export const usersReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
@@ -77,6 +92,8 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
             return {...state, totalUsersCount: action.totalUsersCount}
         case SET_IS_FETCHING :
             return {...state, isFetching: action.isFetching}
+        case SET_IS_FOLLOWING_PROGRESS :
+            return {...state, followingInProgress: action.followingInProgress}
 
         default :
             return state
@@ -89,5 +106,6 @@ export const unfollow = (userId: number) => ({type: "UNFOLLOW", userId})
 export const setUsers = (users: Array<UserType>) => ({type: "SET_USERS", users})
 export const setCurrentPage = (currentPage: number) => ({type: "SET_CURRENT_PAGE", currentPage})
 export const setTotalUsersCount = (totalUsersCount: number) => ({type: "SET_TOTAL_USERS_COUNT", totalUsersCount})
-export const setIsFetching = (isFetching:boolean) => ({type: "SET_IS_FETCHING", isFetching})
+export const setIsFetching = (isFetching: boolean) => ({type: "SET_IS_FETCHING", isFetching})
+export const setIsFollowingProgress = (followingInProgress: boolean) => ({type: "SET_IS_FOLLOWING_PROGRESS", followingInProgress})
 
