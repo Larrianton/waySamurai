@@ -1,17 +1,19 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    follow,
+    followingSuccess,
+
+    getUsers,
+    pageChange,
     setCurrentPage,
-    setIsFetching, setIsFollowingProgress,
-    setTotalUsersCount,
-    setUsers,
-    unfollow, UserType,
+    setIsFetching,
+    setTotalUsersCount, unfollowingSuccess,
+
+    UserType,
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
-import {getNextPageUsersList, getUsersList} from "../../api/api";
 
 export type UsersPagePropsType = mapStateToPropsType & mapDispatchToPropsType
 
@@ -20,38 +22,43 @@ export type mapStateToPropsType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    followingInProgress: Array<number>
     isFetching: boolean
-    followingInProgress: boolean
+
+
 }
 export type mapDispatchToPropsType = {
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
-    setUsers: (users: Array<UserType>) => void
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
-    setIsFetching: (isFetching: boolean) => void
-    setIsFollowingProgress: (followingInProgress: boolean) => void
-
+    getUsers: (currentPage: number, pageSize: number) => void
+    pageChange: (p: number, currentPage: number, pageSize: number) => void
+    followingSuccess: (userId: number) => void
+    unfollowingSuccess: (userId: number) => void
 }
 
 
 export class UsersContainer extends React.Component <UsersPagePropsType> {
     componentDidMount() {
-        this.props.setIsFetching(true)
-        getUsersList(this.props.currentPage, this.props.pageSize).then(res => {
-            this.props.setIsFetching(false)
-            this.props.setUsers(res.items);
-            this.props.setTotalUsersCount(res.totalCount);
-        })
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+
+
+        // this.props.setIsFetching(true)
+        // getUsersList(this.props.currentPage, this.props.pageSize).then(res => {
+        //     this.props.setIsFetching(false)
+        //     this.props.setUsers(res.items);
+        //     this.props.setTotalUsersCount(res.totalCount);
+        // })
     }
 
+
     onPageChanged = (p: number) => {
-        this.props.setCurrentPage(p)
-        this.props.setIsFetching(true)
-        getNextPageUsersList(this.props.currentPage, this.props.pageSize).then(res => {
-            this.props.setIsFetching(false)
-            this.props.setUsers(res.items);
-        })
+        this.props.pageChange(p, this.props.currentPage, this.props.pageSize)
+        // this.props.setCurrentPage(p)
+        // this.props.setIsFetching(true)
+        // getNextPageUsersList(this.props.currentPage, this.props.pageSize).then(res => {
+        //     this.props.setIsFetching(false)
+        //     this.props.setUsers(res.items);
+        // })
     }
 
     render() {
@@ -63,11 +70,10 @@ export class UsersContainer extends React.Component <UsersPagePropsType> {
                     pageSize={this.props.pageSize}
                     totalUsersCount={this.props.totalUsersCount}
                     currentPage={this.props.currentPage}
-                    follow={this.props.follow}
-                    unfollow={this.props.unfollow}
                     onPageChanged={this.onPageChanged}
                     followingInProgress={this.props.followingInProgress}
-                    setIsFollowingProgress={this.props.setIsFollowingProgress}
+                    followingSuccess={this.props.followingSuccess}
+                    unfollowingSuccess={this.props.unfollowingSuccess}
                 />
             </>
         )
@@ -120,8 +126,8 @@ export const UsersWithConnect = connect(mapStateToProps,
         setIsFetching,
         setTotalUsersCount,
         setCurrentPage,
-        setUsers,
-        unfollow,
-        follow,
-        setIsFollowingProgress,
+        pageChange,
+        followingSuccess,
+        unfollowingSuccess,
+        getUsers
     })(UsersContainer)
