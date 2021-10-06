@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 
-import {AddPostAC, ChangePostAC, profileReducer, ProfileType, SetProfileAC} from "./profile-reducer";
+import {AddPostAT, ChangePostAT, profileReducer, ProfileType, SetProfileAT} from "./profile-reducer";
 import {dialogsReducer, newMessageBodyActionType, sendMessageBodyActionType} from "./dialogs-reducer";
 
 
@@ -54,9 +54,9 @@ type storeType = {
 }
 
 
- type ActionTypes =  ChangePostAC
-    | AddPostAC
-    | SetProfileAC
+ type ActionTypes =  ChangePostAT
+    | AddPostAT
+    | SetProfileAT
     | sendMessageBodyActionType
     | newMessageBodyActionType
 

@@ -2,10 +2,12 @@ import React from 'react';
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {Profile} from "./Profile";
-import axios from "axios";
-import {ProfileType, setProfile} from "../../redux/profile-reducer";
+import {getProfile, ProfileType} from "../../redux/profile-reducer";
 import {withRouter} from 'react-router-dom';
 import {RouteComponentProps} from "react-router"
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
+
 
 type PathParamProfile = {
     userId: string | undefined
@@ -13,7 +15,7 @@ type PathParamProfile = {
 type RouteProfile = RouteComponentProps<PathParamProfile>
 
 type mapDispatchToPropsType = {
-    setProfile: (profile: ProfileType) => void
+    getProfile: (userId:string) => void
 }
 export type mapStateToPropsType = {
     userProfile: ProfileType | null
@@ -24,14 +26,11 @@ export class ProfileContainer extends React.Component<ProfilePagePropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId="2"
+            userId = "2"
         }
-        debugger
-        axios.get<ProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(res => {
-            debugger
-            this.props.setProfile(res.data);
-        })
+        this.props.getProfile(userId)
     }
+
 
     render() {
         return (
@@ -45,13 +44,23 @@ export class ProfileContainer extends React.Component<ProfilePagePropsType> {
 }
 
 
-
-
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
-        userProfile: state.profilePage.userProfile
+        userProfile: state.profilePage.userProfile,
     }
 
 }
-let ProfileWithUrlData = withRouter(ProfileContainer)
-export const ProfileWithConnect = connect(mapStateToProps, {setProfile})(ProfileWithUrlData)
+// Пошагово Обернули Компоненты HOC
+// let AuthRedirectComponent = WithAuthRedirect(ProfileContainer)
+// let ProfileWithUrlData = withRouter(AuthRedirectComponent)
+// export const ProfileWithConnect = connect(mapStateToProps,{getProfile})(ProfileWithUrlData)
+
+
+export const ProfileWithCompose = compose<React.ComponentType>(
+    connect(mapStateToProps,{getProfile} ),
+    withRouter,
+    WithAuthRedirect
+)(ProfileContainer)
+// Ад HOC
+// let ProfileWithUrlData = withRouter(ProfileContainer)
+// export const ProfileWithConnect = WithAuthRedirect(connect(mapStateToProps,{getProfile})(ProfileWithUrlData))

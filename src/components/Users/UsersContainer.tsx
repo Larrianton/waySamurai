@@ -1,19 +1,19 @@
-import React from "react";
+import React, {ComponentType} from "react";
 import {connect} from "react-redux";
 import {
     followingSuccess,
-
     getUsers,
     pageChange,
-    setCurrentPage,
     setIsFetching,
-    setTotalUsersCount, unfollowingSuccess,
-
+    setTotalUsersCount,
+    unfollowingSuccess,
     UserType,
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
+import {compose} from "redux";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
 export type UsersPagePropsType = mapStateToPropsType & mapDispatchToPropsType
 
@@ -28,7 +28,6 @@ export type mapStateToPropsType = {
 
 }
 export type mapDispatchToPropsType = {
-    setCurrentPage: (page: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
     getUsers: (currentPage: number, pageSize: number) => void
     pageChange: (p: number, currentPage: number, pageSize: number) => void
@@ -121,13 +120,26 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
 //
 //     }
 // }
-export const UsersWithConnect = connect(mapStateToProps,
-    {
-        setIsFetching,
-        setTotalUsersCount,
-        setCurrentPage,
-        pageChange,
-        followingSuccess,
-        unfollowingSuccess,
-        getUsers
-    })(UsersContainer)
+
+// export const UsersWithConnect = connect(mapStateToProps,
+//     {
+//         setIsFetching,
+//         setTotalUsersCount,
+//         pageChange,
+//         followingSuccess,
+//         unfollowingSuccess,
+//         getUsers
+//     })(UsersContainer)
+
+export const UsersWithCompose = compose<ComponentType>(
+    connect(mapStateToProps,
+        {
+            setIsFetching,
+            setTotalUsersCount,
+            pageChange,
+            followingSuccess,
+            unfollowingSuccess,
+            getUsers
+        }),
+    WithAuthRedirect
+)(UsersContainer)

@@ -1,27 +1,23 @@
 import {v1} from "uuid";
-const ADD_POST = "ADD-POST"
-const CHANGE_POST = "CHANGE-POST-TEXT"
-const SET_PROFILE = "SET-PROFILE"
-export const addNewPostActionCreator = (): AddPostAC => ({type: ADD_POST})
-export const changePostTextActionCreator = (newText: string): ChangePostAC => ({type: CHANGE_POST, newText})
-export const setProfile = (profile: ProfileType): SetProfileAC => ({type: SET_PROFILE, profile})
-export type ChangePostAC = {
-    type: "CHANGE-POST-TEXT"
-    newText: string
-}
-export type AddPostAC = {
-    type: "ADD-POST"
-}
+import {Dispatch} from "redux";
+import {usersApi} from "../api/api";
 
-export type SetProfileAC = {
-    type: "SET-PROFILE"
-    profile: ProfileType
-}
+export const addNewPostActionCreator = () => ({type: "ADD_POST"} as const)
+export const changePostTextActionCreator = (newText: string) => ({type: "CHANGE_POST", newText} as const)
+export const setProfile = (profile: ProfileType) => ({type: "SET_PROFILE", profile} as const)
+export const getProfile = (userId:string) => (dispatch:Dispatch) => {
+    usersApi.getProfile(userId)
+        .then(res => {
+            dispatch(setProfile(res.data))
+        })}
+export type ChangePostAT = ReturnType<typeof changePostTextActionCreator>
+export type AddPostAT = ReturnType<typeof addNewPostActionCreator>
+export type SetProfileAT = ReturnType<typeof setProfile>
 
 export type ActionTypesProfileReducer =
-    ChangePostAC
-    | AddPostAC
-    | SetProfileAC
+    ChangePostAT
+    | AddPostAT
+    | SetProfileAT
 
 type PostType = {
     id: string
@@ -62,7 +58,7 @@ let InitialState = {
 
 export const profileReducer = (state: ProfilePageType = InitialState, action: ActionTypesProfileReducer) => {
     switch (action.type) {
-        case ADD_POST:
+        case "ADD_POST":
             let newPost = {
                 id: v1(),
                 message: state.newPostText.trim(),
@@ -76,12 +72,12 @@ export const profileReducer = (state: ProfilePageType = InitialState, action: Ac
             }
 
 
-        case CHANGE_POST:
+        case "CHANGE_POST":
             return {
                 ...state,
                 newPostText: action.newText
             }
-        case SET_PROFILE : {
+        case "SET_PROFILE" : {
             return {
                 ...state,
                 userProfile: action.profile

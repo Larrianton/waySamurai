@@ -1,20 +1,16 @@
-type SetIsFetchingAT = {
-    type: "SET_IS_FETCHING",
-    isFetching: boolean,
-}
-type SetAuthUserDataAT = {
-    type: "SET_AUTH_USER_DATA",
-    id: string,
-    email: string,
-    login: string,
-}
+import {Dispatch} from "redux";
+import {authApi} from "../api/api";
+
+type SetIsFetchingAT = ReturnType<typeof setIsFetching>
+export type SetAuthUserData = ReturnType<typeof setAuthUserData>
 
 
-type InitialStateType = {
+export type InitialAuthStateType = {
     id: string | null,
     email: string | null,
     login: string | null,
     isFetching: boolean,
+    isAuth:boolean
 }
 
 let initialState = {
@@ -22,25 +18,24 @@ let initialState = {
     email: null,
     login: null,
     isFetching: false,
+    isAuth: false
 
 }
-type ActionTypes = SetAuthUserDataAT | SetIsFetchingAT
-
-const SET_IS_FETCHING = "SET_IS_FETCHING"
-const SET_AUTH_USER_DATA = "SET_AUTH_USER_DATA"
+type ActionTypes = SetAuthUserData | SetIsFetchingAT
 
 
-export const authReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
+export const authReducer = (state: InitialAuthStateType= initialState, action: ActionTypes): InitialAuthStateType => {
     switch (action.type) {
-        case SET_AUTH_USER_DATA :
+        case "SET_AUTH_USER_DATA":
             return {
                 ...state,
                 id: action.id,
                 email: action.email,
-                login: action.login
+                login: action.login,
+                isAuth: true
 
             }
-        case SET_IS_FETCHING :
+        case "SET_IS_FETCHING" :
             return {...state, isFetching: action.isFetching}
 
         default :
@@ -49,11 +44,24 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 }
 
 
-export const setIsFetching = (isFetching: boolean) => ({type: SET_IS_FETCHING, isFetching})
+export const setIsFetching = (isFetching: boolean) => ({type: "SET_IS_FETCHING", isFetching} as const)
 export const setAuthUserData = (email: string, id: string, login: string) => ({
-    type: SET_AUTH_USER_DATA,
+    type: "SET_AUTH_USER_DATA",
     id,
     email,
     login
-})
+} as const)
+
+export const getAuthUserData = () => (dispatch: Dispatch) => {
+    authApi.authMe()
+        .then(res => {
+            dispatch(setIsFetching(true))
+            if (res.data.resultCode === 0) {
+                let {email, id, login} = res.data.data
+                dispatch(setAuthUserData(email, id, login))
+                dispatch(setIsFetching(false))
+            }
+        })
+
+}
 
