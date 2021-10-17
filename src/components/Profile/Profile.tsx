@@ -1,6 +1,6 @@
 import React from 'react';
 import {MypostsContainer} from "./Myposts/MypostsContainer";
-import {ProfileInfo} from "./ProfileInfo";
+import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {ProfilePagePropsType} from "./ProfileContainer";
 
 

@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from './Profile.module.css'
-import {ProfileType} from "../../redux/profile-reducer";
-import {Preloader} from "../common/Preloader/Preloader";
-
+import {ProfileType} from "../../../redux/profile-reducer";
+import {Preloader} from "../../common/Preloader/Preloader";
+import {ProfileStatus} from './ProfileStatus'
 type ProfileInfoPropsType = {
     userProfile: ProfileType | null
 }
 
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
+
     if (!props.userProfile) {
         return <Preloader/>
     }
@@ -22,6 +23,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
             <div>
                 <img src={props.userProfile.photos.small || "https://avt-29.foto.mail.ru/mail/broonson/_avatar180?"}/>
                 <span>{props.userProfile.fullName}</span>
+                <ProfileStatus status={"hello"} />
             </div>
 
         </div>
