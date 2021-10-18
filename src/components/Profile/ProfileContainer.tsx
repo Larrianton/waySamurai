@@ -1,34 +1,30 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {AppStateType} from "../../redux/redux-store";
 import {Profile} from "./Profile";
-import {getProfile, ProfileType} from "../../redux/profile-reducer";
+import {getProfile, getProfileStatus, ProfileType, updateProfileStatus} from "../../redux/profile-reducer";
 import {withRouter} from 'react-router-dom';
 import {RouteComponentProps} from "react-router"
-import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {AppStateType} from "../../redux/redux-store";
 
 
-type PathParamProfile = {
-    userId: string | undefined
-}
-type RouteProfile = RouteComponentProps<PathParamProfile>
 
 type mapDispatchToPropsType = {
-    getProfile: (userId:string) => void
+    getProfile: (userId: number | null) => void
+    getProfileStatus: (userId: number | null) => void
+    updateProfileStatus: (status: string) => void
 }
 export type mapStateToPropsType = {
     userProfile: ProfileType | null
+    status: string
+    id: number | null
 }
-export type ProfilePagePropsType = mapStateToPropsType & mapDispatchToPropsType & RouteProfile
+export type ProfilePagePropsType = mapStateToPropsType & mapDispatchToPropsType
 
 export class ProfileContainer extends React.Component<ProfilePagePropsType> {
     componentDidMount() {
-        let userId = this.props.match.params.userId
-        if (!userId) {
-            userId = "2"
-        }
-        this.props.getProfile(userId)
+            this.props.getProfile(this.props.id)
+            this.props.getProfileStatus(this.props.id)
     }
 
 
@@ -45,19 +41,21 @@ export class ProfileContainer extends React.Component<ProfilePagePropsType> {
 
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
-    return {
-        userProfile: state.profilePage.userProfile,
-    }
+ return {
+     userProfile: state.profilePage.userProfile,
+     status: state.profilePage.status,
+     id: state.authPage.id
+ }
 
 }
-// Пошагово Обернули Компоненты HOC
+// Пошагово Обернул Компоненты HOC
 // let AuthRedirectComponent = WithAuthRedirect(ProfileContainer)
 // let ProfileWithUrlData = withRouter(AuthRedirectComponent)
 // export const ProfileWithConnect = connect(mapStateToProps,{getProfile})(ProfileWithUrlData)
 
 
 export const ProfileWithCompose = compose<React.ComponentType>(
-    connect(mapStateToProps,{getProfile} ),
+    connect(mapStateToProps, {getProfile,getProfileStatus,updateProfileStatus}),
     withRouter,
     // WithAuthRedirect
 )(ProfileContainer)

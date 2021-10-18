@@ -5,13 +5,15 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileStatus} from './ProfileStatus'
 type ProfileInfoPropsType = {
     userProfile: ProfileType | null
+    status: string
+    updateProfileStatus: (status: string) => void
 }
 
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
-
     if (!props.userProfile) {
         return <Preloader/>
     }
+    debugger
     return (
 
         <div className={s.content}>
@@ -23,7 +25,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
             <div>
                 <img src={props.userProfile.photos.small || "https://avt-29.foto.mail.ru/mail/broonson/_avatar180?"}/>
                 <span>{props.userProfile.fullName}</span>
-                <ProfileStatus status={"hello"} />
+                <ProfileStatus status={props.status} updateProfileStatus={props.updateProfileStatus} />
             </div>
 
         </div>

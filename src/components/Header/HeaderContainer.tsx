@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {getAuthUserData} from "../../redux/auth-reducer";
 
 type MapStateToPropsType = {
-    id: string | null,
+    id: number | null,
     login: string | null,
     email: string | null,
     isAuth: boolean

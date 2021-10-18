@@ -14,6 +14,7 @@ type profilePageType = {
     postsData: Array<postType>
     newPostText: string
     userProfile: ProfileType | null
+    status:string
 
 }
 export type dialogsDataType = {
@@ -103,6 +104,7 @@ const store: storeType = {
         profilePage: {
             userProfile:null ,
             newPostText: "",
+            status:"",
             postsData: [
                 {
                     id: v1(),

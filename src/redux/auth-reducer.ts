@@ -6,7 +6,7 @@ export type SetAuthUserData = ReturnType<typeof setAuthUserData>
 
 
 export type InitialAuthStateType = {
-    id: string | null,
+    id: number | null,
     email: string | null,
     login: string | null,
     isFetching: boolean,
@@ -45,7 +45,7 @@ export const authReducer = (state: InitialAuthStateType= initialState, action: A
 
 
 export const setIsFetching = (isFetching: boolean) => ({type: "SET_IS_FETCHING", isFetching} as const)
-export const setAuthUserData = (email: string, id: string, login: string) => ({
+export const setAuthUserData = (email: string, id: number, login: string) => ({
     type: "SET_AUTH_USER_DATA",
     id,
     email,

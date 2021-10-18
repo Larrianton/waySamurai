@@ -2,31 +2,13 @@ import {UserType} from "../redux/users-reducer";
 import axios from "axios";
 import {ProfileType} from "../redux/profile-reducer";
 
-type ItemsApiUsersType = {
-    items: Array<UserType>
-    totalCount: number
-}
-type subscribeUsersApiType = {
-    resultCode: number
-}
-type AuthApiType = {
-    data: {
-        id: string,
-        login: string,
-        email: string,
-    }
-    resultCode: number,
-}
-
-
 const instance = axios.create({
     withCredentials: true,
     baseURL: "https://social-network.samuraijs.com/api/1.0/",
     headers: {
-        "API-KEY": "cf494fa6-50c4-47b4-b87c-61978a308635"
+        "API-KEY": "5672a2e5-6f67-4cc0-9979-abdb3acc400d"
     }
 })
-
 
 export const usersApi = {
     getNextPageUsersList(p: number, pageSize: number) {
@@ -48,16 +30,46 @@ export const usersApi = {
     unfollowingUser(userId: number) {
         return instance.delete<subscribeUsersApiType>(`follow/${userId}`)
 
-    },
-    getProfile(userId: string) {
-        return instance.get<ProfileType>(`profile/${userId}`)
     }
 }
 
+export const profileApi = {
+    getProfile(userId: number) {
+        return instance.get<ProfileType>(`profile/${userId}`)
+    },
+    getProfileStatus(userId:number) {
+        return instance.get<string>(`/profile/status/${userId}`)
+    } ,
+    updateProfileStatus(status:string){
+        return instance.put<UpdateProfileStatusApi>(`/profile/status/` , {status})
+    }
+}
 
 export const authApi = {
     authMe() {
         return instance.get<AuthApiType>('/auth/me')
 
     }
+}
+//Types
+
+type ItemsApiUsersType = {
+    items: Array<UserType>
+    totalCount: number
+}
+type subscribeUsersApiType = {
+    resultCode: number
+}
+type AuthApiType = {
+    data: {
+        id: number
+        login: string
+        email: string
+    }
+    resultCode: number
+}
+type UpdateProfileStatusApi = {
+    resultCode:number
+    messages:[]
+    data:{}
 }

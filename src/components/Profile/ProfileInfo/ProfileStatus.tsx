@@ -1,39 +1,52 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './Profile.module.css'
 
 type ProfileStatusPropsType = {
     status: string
+    updateProfileStatus: (status: string) => void
 }
 
 export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
-    state = {
-        editMode: false
 
+    state = {
+        editMode: false,
+        status: this.props.status
     }
-    activatedMode() {
+    activatedMode = () => {
         this.setState({
-            editMode:true
+            editMode: true
         })
     }
-    deactivatedMode() {
+    deactivatedMode = () => {
         this.setState({
-            editMode:false
+            editMode: false
+        })
+        this.props.updateProfileStatus(this.state.status)
+    }
+    onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
+        this.setState({
+            status: e.target.value
         })
     }
 
     render() {
         return (
             <div className={s.content}>
-                    {!this.state.editMode &&
-                    <div>
-                        <span onDoubleClick = { this.activatedMode.bind(this)}>{this.props.status}</span>
-                    </div>}
-                {this.state.editMode &&
+                {!this.state.editMode &&
                 <div>
-                    <input  onBlur={this.deactivatedMode.bind(this)} value={this.props.status}/>
+                    <span onDoubleClick={this.activatedMode.bind(this)}>{this.props.status}</span>
                 </div>
                 }
-
+                {this.state.editMode &&
+                <div>
+                    <input onBlur={this.deactivatedMode.bind(this)} onChange={this.onStatusChange}
+                           onKeyPress={(e) => {
+                               if (e.key === "Enter") {
+                                   this.deactivatedMode.bind(this)()
+                               }
+                           }}/>
+                </div>
+                }
             </div>
         )
     };

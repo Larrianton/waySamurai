@@ -5,11 +5,9 @@ import {ProfilePagePropsType} from "./ProfileContainer";
 
 
 export const Profile: React.FC<ProfilePagePropsType> = (props) => {
-
-    debugger
     return (
         <div>
-            <ProfileInfo userProfile={props.userProfile}/>
+            <ProfileInfo userProfile={props.userProfile} status={props.status} updateProfileStatus={props.updateProfileStatus}/>
             <MypostsContainer/>
         </div>
 

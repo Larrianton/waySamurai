@@ -1,6 +1,6 @@
 import React from "react";
 import {UserType} from "../../redux/users-reducer";
-import s from "../Users/users.module.css"
+import s from "./Users.module.css"
 import {NavLink} from "react-router-dom";
 
 type UsersPropsType = {
