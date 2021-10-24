@@ -1,16 +1,13 @@
 import {v1} from "uuid";
-import {dialogsPageType} from "./store";
+import {dialogsDataType, messagesDataType} from "./store";
 
 
-export const newMessageBodyActionCreator = (body: string): newMessageBodyActionType => ({type: NEW_MESSAGE_BODY, body})
-export const sendMessageActionCreator = (): sendMessageBodyActionType => ({type: SEND_MESSAGE})
+export const sendMessageActionCreator = (message: string) => ({type: SEND_MESSAGE, message } as const)
 
-const NEW_MESSAGE_BODY = "NEW-MESSAGE-BODY"
 const SEND_MESSAGE = "SEND-MESSAGE"
 
 
 let initialState = {
-    newMessageText: "",
     dialogsData: [
         {
             id: v1(),
@@ -46,32 +43,21 @@ let initialState = {
         {id: v1(), message: "Hey chicks!"}
     ]
 }
-type DialogsReducerType =  newMessageBodyActionType | sendMessageBodyActionType
+type DialogsReducerType =
+    | sendMessageBodyActionType
 
-export type newMessageBodyActionType = {
-    type: "NEW-MESSAGE-BODY"
-    body: string
-}
-export type sendMessageBodyActionType = {
-    type: "SEND-MESSAGE"
-}
 
-export const dialogsReducer = (state: dialogsPageType = initialState, action: DialogsReducerType): dialogsPageType => {
+export type sendMessageBodyActionType = ReturnType<typeof sendMessageActionCreator>
+
+export const dialogsReducer = (state: InitialStateType = initialState, action: DialogsReducerType): InitialStateType => {
     switch (action.type) {
-        case NEW_MESSAGE_BODY :
-            return {
-                ...state,
-                newMessageText: action.body
-            }
-
         case SEND_MESSAGE :
             let newMessage = {
                 id: v1(),
-                message: state.newMessageText
+                message:action.message
             };
             return {
                 ...state,
-                newMessageText: "",
                 messagesData: [...state.messagesData, newMessage],
             }
         default:
@@ -79,4 +65,10 @@ export const dialogsReducer = (state: dialogsPageType = initialState, action: Di
     }
 
 
+}
+
+//Types
+type InitialStateType = {
+    dialogsData: Array<dialogsDataType>
+    messagesData: Array<messagesDataType>
 }

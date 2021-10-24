@@ -1,7 +1,7 @@
 import {v1} from "uuid";
 
-import {AddPostAT, ChangePostAT, profileReducer, ProfileType, SetProfileAT} from "./profile-reducer";
-import {dialogsReducer, newMessageBodyActionType, sendMessageBodyActionType} from "./dialogs-reducer";
+import {AddPostAT, profileReducer, ProfileType, SetProfileAT} from "./profile-reducer";
+import {dialogsReducer, sendMessageBodyActionType} from "./dialogs-reducer";
 
 
 export type postType = {
@@ -12,10 +12,8 @@ export type postType = {
 }
 type profilePageType = {
     postsData: Array<postType>
-    newPostText: string
     userProfile: ProfileType | null
     status:string
-
 }
 export type dialogsDataType = {
     id: string
@@ -29,7 +27,6 @@ export type messagesDataType = {
 export type dialogsPageType = {
     dialogsData: Array<dialogsDataType>
     messagesData: Array<messagesDataType>
-    newMessageText: string
 }
 export type rootStateType = {
     dialogsPage: dialogsPageType
@@ -55,17 +52,16 @@ type storeType = {
 }
 
 
- type ActionTypes =  ChangePostAT
+ type ActionTypes =
     | AddPostAT
     | SetProfileAT
     | sendMessageBodyActionType
-    | newMessageBodyActionType
+
 
 
 const store: storeType = {
     _state: {
         dialogsPage: {
-            newMessageText: "",
             dialogsData: [
                 {
                     id: v1(),
@@ -103,7 +99,6 @@ const store: storeType = {
         },
         profilePage: {
             userProfile:null ,
-            newPostText: "",
             status:"",
             postsData: [
                 {

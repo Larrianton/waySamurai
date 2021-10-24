@@ -3,27 +3,24 @@ import s from './Dialogs.module.css'
 import {DialogItem} from "./Dialog/DialogItem";
 import {MessageItem} from "./MessageItem/MessageItem";
 import {dialogsPageType} from "../../redux/store";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
 type dialogsType = {
-    sendMessage: () => void
-    changeMessage: (text: string) => void
-    messageBody: string
+    sendMessage: (message:string) => void
     dialogsPage:dialogsPageType
+}
+type FormDataType = {
+    dialog:string
 }
 
 export const Dialogs = (props: dialogsType) => {
-
 
     let dialogElements = props.dialogsPage.dialogsData.map(d => <DialogItem name={d.name} id={d.id}
                                                                                   image={d.image}/>);
     let messageElements = props.dialogsPage.messagesData.map(m => <MessageItem message={m.message}/>)
 
-    const sendMessage = () => {
-        props.sendMessage()
-
-    }
-    const changeMessageBody = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.changeMessage((e.currentTarget.value))
+    const onSubmit = (formData:FormDataType) => {
+        props.sendMessage(formData.dialog)
 
     }
 
@@ -37,12 +34,24 @@ export const Dialogs = (props: dialogsType) => {
                 {messageElements}
 
             </div>
-            <div>
-                <textarea value={props.messageBody} onChange={changeMessageBody}></textarea>
-                <button onClick={sendMessage}>Send Message</button>
-            </div>
+           <DialogsReduxForm onSubmit={onSubmit}/>
         </div>
 
     )
 
 }
+export const DialogsForm:React.FC<InjectedFormProps<FormDataType> > = (props) => {
+    debugger
+    return (
+            <div>
+                <form onSubmit={props.handleSubmit}>
+                <Field placeholder={"New Message Dialogs"} component="textarea" name="dialog"/>
+                <button>Send Message</button>
+                </form>
+            </div>
+
+
+    )
+
+}
+ const DialogsReduxForm  = reduxForm<FormDataType >({form: 'Dialogs'})(DialogsForm)

@@ -2,8 +2,7 @@ import {v1} from "uuid";
 import {Dispatch} from "redux";
 import {profileApi} from "../api/api";
 
-export const addNewPostActionCreator = () => ({type: "ADD_POST"} as const)
-export const changePostTextActionCreator = (newText: string) => ({type: "CHANGE_POST", newText} as const)
+export const addNewPostActionCreator = (newPostText:string) => ({type: "ADD_POST" , newPostText} as const)
 export const setProfile = (userProfile: ProfileType) => ({type: "SET_PROFILE", userProfile} as const)
 export const setProfileStatus = (status: string ) => ({type: "SET_PROFILE_STATUS", status} as const)
 export const getProfile = (userId: number) => (dispatch: Dispatch) => {
@@ -32,8 +31,7 @@ export const updateProfileStatus = (status: string) => (dispatch: Dispatch) => {
 
 
 let InitialState = {
-    newPostText: "",
-    postsData: [
+      postsData: [
         {
             id: v1(),
             likes: 15,
@@ -57,7 +55,7 @@ export const profileReducer = (state: ProfilePageType = InitialState, action: Ac
         case "ADD_POST":
             let newPost = {
                 id: v1(),
-                message: state.newPostText.trim(),
+                message: action.newPostText,
                 likes: 0,
                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKTYsXfFpkymGFmBsk9MetiDLSxyETN_phfg&usqp=CAU"
             };
@@ -67,12 +65,6 @@ export const profileReducer = (state: ProfilePageType = InitialState, action: Ac
                 postsData: [...state.postsData, newPost]
             }
 
-
-        case "CHANGE_POST":
-            return {
-                ...state,
-                newPostText: action.newText
-            }
         case "SET_PROFILE" : {
             return {
                 ...state,
@@ -91,13 +83,11 @@ export const profileReducer = (state: ProfilePageType = InitialState, action: Ac
     }
 }
 //Types
-export type ChangePostAT = ReturnType<typeof changePostTextActionCreator>
 export type AddPostAT = ReturnType<typeof addNewPostActionCreator>
 export type SetProfileAT = ReturnType<typeof setProfile>
 export type SetProfileStatusAT = ReturnType<typeof setProfileStatus>
 
 export type ActionTypesProfileReducer =
-    ChangePostAT
     | AddPostAT
     | SetProfileAT
     | SetProfileStatusAT
@@ -116,7 +106,6 @@ export type ProfileType = {
 }
 type ProfilePageType = {
     postsData: Array<PostType>
-    newPostText: string
     userProfile: ProfileType | null
     status:string
 }
